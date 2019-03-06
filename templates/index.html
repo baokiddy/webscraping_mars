@@ -5,24 +5,59 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>Surfing</title>
+  <title>Mars Data</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
 </head>
 
 <body>
   <div clas="container">
     <div class="jumbotron text-center">
-      <h1>Endless Summer</h1>
-      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Surfing Reports</a></p>
+      <h1>Mission to Mars</h1>
+      <p><a class="btn btn-primary btn-lg" href="/scrape" role="button">Scrape New Data</a></p>
     </div>
       
-    <!-- surf data -->
+    <!-- mars data -->
     <div class="row">
       <div class="col-md-8 col-md-offset-2">
-        <img src= {{ surfing.src }} width: 50% />
-        <h3>Santa Barbara Surf Report</h3>
-        <p>{{ surfing.report }}</p>
+        <h2>Latest Mars News</h2>
+        <h3>{{ explore.nasa_article_title }}</h3>
+        <p>{{ explore.nasa_article_content }}</p>
       </div>
+    </div>
+    <div class="row">
+      <div class="col-md-7 col-md-offset-2">
+        <h2>Featured Mars Image</h2>
+        <img src= "{{ explore.jpl_mars_feature_url }}" alt= "feature" style= "width: 100%;" />
+      </div>
+      <div class="row">
+      <div class="col-md-3 col-md-offset-2">
+          <h3>Current Weather on Mars</h3>
+          <p>{{ explore.latest_mars_weather }}</p>
+      </div>
+      <div class="col-md-3 col-md-offset-2">
+          <h3>Mars Facts</h3>
+          <table class = "table">
+            {{ explore.mars_facts|safe }}
+          </table>
+      </div>
+    </div>
+    </div>
+    <div class="row">
+      <div class="col-md-8 col-md-offset-2">
+        <h2>Mars Hemispheres</h2>
+        {% for item in explore.mars_hemisphere_images %}
+        <div class="row">
+          <div class="col-sm-6">
+          <div class="card border-dark mb-3" style="width: 18rem;">
+            <img class = "card-img-top" src= "{{ item.img_url }}" alt="Card image cap" style= "width: 200%;"/>
+            <div class="card-body">
+              <h5 class= "card-title">{{ item.title }}</h5>
+          </div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
     </div>
   </div>
 

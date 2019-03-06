@@ -22,13 +22,10 @@ def scrape():
     soup = BeautifulSoup(html, 'html.parser')
 
     latest_title = soup.find('div', class_='content_title').get_text()
-    latest_paragraph = soup.find('div', class_='article_teaser_body')
+    latest_paragraph = mars_weather = browser.find_by_css(f'div[class="article_teaser_body"]').first.text
 
-    nasa_mars = {}
-    nasa_mars['article_title'] = latest_title
-    nasa_mars['article_paragraph'] = latest_paragraph
-
-    mars_data['nasa_mars_article'] = nasa_mars
+    mars_data['nasa_article_title'] = latest_title
+    mars_data['nasa_article_content'] = latest_paragraph
 
     ######################################################################################################
 
@@ -47,7 +44,7 @@ def scrape():
 
     # Scrape the browser into soup and use soup to find the full resolution image of mars
     # Save the image url to a variable called `featured_image_url`
-    featured_image_url = browser.find_by_css(f'img[class="fancybox-image"]')["src"]
+    featured_image_url = browser.find_by_css(f'img[class="fancybox-image"]').first["src"]
 
     mars_data['jpl_mars_feature_url'] = featured_image_url
 
@@ -110,10 +107,7 @@ def scrape():
         results[i].click()
         
         img = browser.find_by_css(f'img[class="wide-image"]')['src']
-        #img_url.append(img)
-        
         img_title = browser.find_by_css(f'h2[class="title"]').first.text   
-        #title.append(img_title)
         
         hemisphere["title"] = img_title
         hemisphere["img_url"] = img
@@ -129,5 +123,5 @@ def scrape():
     mars_data['mars_hemisphere_images'] = hemisphere_image_urls
 
     browser.quit()
-    return surf_data
+    return mars_data
 
